@@ -41,6 +41,8 @@ HWheel::HWheel(float seed)
 		} else {
 			blue = 0;
 		}
+		c.setRedBlueYellow((uint8_t)red, (uint8_t)blue, (uint8_t)yellow);
+		colors.push_back(c);
 	}	
 }
 
