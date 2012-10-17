@@ -11,7 +11,7 @@ AR = ar
 ARFLAGS = rcs
 
 CPP = g++
-CPPFLAGS += -Iinclude -O3
+CPPFLAGS += -Iinclude -O3 -std=c++11
 
 LD = g++
 LDFLAGS = -Lbin
