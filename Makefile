@@ -53,15 +53,15 @@ help:
 
 #Dep file creation
 $(BUILD)/%.d: $(SRC)/%.cpp
-	$(CPP) $(CPPFLAGS) -MM -MT $(patsubst $(SRC)/%.cpp,$(BUILD)/%.o,$<) $< > $@
+	@$(CPP) $(CPPFLAGS) -MM -MT $(patsubst $(SRC)/%.cpp,$(BUILD)/%.o,$<) $< > $@
 
 $(BUILD)/%.d: $(LIB)/%.cpp
-	$(CPP) $(CPPFLAGS) -MM -MT $(patsubst $(LIB)/%.cpp,$(BUILD)/%.o,$<) $< > $@
+	@$(CPP) $(CPPFLAGS) -MM -MT $(patsubst $(LIB)/%.cpp,$(BUILD)/%.o,$<) $< > $@
 
 #Obj creation
 $(BUILD)/%.o:
 	@echo Compiling $@
-	$(CPP) $(CPPFLAGS) -c $< -o $@
+	@$(CPP) $(CPPFLAGS) -c $< -o $@
 
 #Target
 $(BIN)/%: $(BUILD)/%.o $(LIB_OBJS)

@@ -6,7 +6,7 @@
 
 class HColor {
 public:
-	HColor();
+	HColor(){};
 
 	void setRedGreenBlue(uint8_t r, uint8_t g, uint8_t b);
 	uint8_t getRed_rgb();

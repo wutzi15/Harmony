@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-HWheel::HWheel(float seed)
+HWheel::HWheel(int seed)
 {
 	deg = seed % 360;
 
@@ -41,7 +41,7 @@ HWheel::HWheel(float seed)
 		} else {
 			blue = 0;
 		}
-		c.setRedBlueYellow((uint8_t)red, (uint8_t)blue, (uint8_t)yellow);
+		c->setRedBlueYellow((uint8_t)red, (uint8_t)blue, (uint8_t)yellow);
 		colors.push_back(c);
 	}	
 }
@@ -51,7 +51,3 @@ HWheel::~HWheel()
 	delete pos;
 }
 
-HWheel::getYellow(float n)
-{
-	if (n >)	
-}
