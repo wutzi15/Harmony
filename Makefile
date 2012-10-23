@@ -20,23 +20,24 @@ BIN = bin
 SRC = src
 INC = include
 BUILD = build
+LIB = lib
 
 -include ./local.config
 
 SRC_FILES = $(wildcard $(SRC)/*.cpp)
 LIB_FILES = $(wildcard $(LIB)/*.cpp)
 
-SRC_DEPS = $(pathsubst $(SRC)/%.cpp,$(BUILD)/%.d,$(SRC_FILES))
-LIB_DEPS = $(pathsubst $(LIB)/%.cpp,$(BUILD)/%.d,$(LIB_FILES))
+SRC_DEPS = $(patsubst $(SRC)/%.cpp,$(BUILD)/%.d,$(SRC_FILES))
+LIB_DEPS = $(patsubst $(LIB)/%.cpp,$(BUILD)/%.d,$(LIB_FILES))
 
 ALL_DEPS = $(SRC_DEPS) $(LIB_DEPS)
 
-SRC_OBJS = $(pathsubst $(SRC)/%.cpp,$(BUILD)/%.o,$(SRC_FILES))
-LIB_OBJS = $(pathsubst $(LIB)/%.cpp,$(BUILD)/%.o,$(LIB_FILES))
+SRC_OBJS = $(patsubst $(SRC)/%.cpp,$(BUILD)/%.o,$(SRC_FILES))
+LIB_OBJS = $(patsubst $(LIB)/%.cpp,$(BUILD)/%.o,$(LIB_FILES))
 
 ALL_OBJS = $(SRC_OBJS) $(LIB_OBJS)
 
-TARGETS = $(pathsubst $(SRC)/%.cpp,$(BIN)/%,$(SRC_FILES))
+TARGETS = $(patsubst $(SRC)/%.cpp,$(BIN)/%,$(SRC_FILES))
 
 all: Harmonylib $(TARGETS)
 
@@ -52,18 +53,18 @@ help:
 
 #Dep file creation
 $(BUILD)/%.d: $(SRC)/%.cpp
-	@$(CPP) $(CPPFLAGS) -MM -MT $(pathsubst $(SRC)/%.cpp,$(BUILD)/%.o,$<) $< > $@
+	$(CPP) $(CPPFLAGS) -MM -MT $(patsubst $(SRC)/%.cpp,$(BUILD)/%.o,$<) $< > $@
 
 $(BUILD)/%.d: $(LIB)/%.cpp
-	@$(CPP) $(CPPFLAGS) -MM -MT $(pathsubst $(LIB)/%.cpp,$(BUILD)/%.o,$<) $< > $@
+	$(CPP) $(CPPFLAGS) -MM -MT $(patsubst $(LIB)/%.cpp,$(BUILD)/%.o,$<) $< > $@
 
 #Obj creation
 $(BUILD)/%.o:
 	@echo Compiling $@
-	@$(CPP) $(CPPFLAGS) -c $< -o $@
+	$(CPP) $(CPPFLAGS) -c $< -o $@
 
 #Target
-$(BIN)%: $(BUILD)/%.o $(LIB_OBJS)
+$(BIN)/%: $(BUILD)/%.o $(LIB_OBJS)
 	@echo Linking $@
 	@$(LD) -o $@ $(LDFLAGS) $(LIBS) $(LIB_OBJS) $<
 
@@ -80,5 +81,34 @@ list:
 	@echo Target List
 	@echo ----------
 	@echo $(TARGETS)
+
+mkinfo:
+	@echo Make Variables
+	@echo --------------
+	@echo MODE = $(MODE)
+	@echo
+	@echo CPP = $(CPP)
+	@echo CPPFLAGS = $(CPPFLAGS)
+	@echo LD = $(LD)
+	@echo LDFLAGS = $(LDFLAGS)
+	@echo
+	@echo Program Files
+	@echo -------------
+	@echo Source files:
+	@echo "    $(SRC_FILES)"
+	@echo Dependency files:
+	@echo "    $(SRC_DEPS)"
+	@echo Object files:
+	@echo "    $(SRC_OBJS)"
+	@echo 
+	@echo Library Files
+	@echo -------------
+	@echo Source files:
+	@echo "    $(LIB_FILES)"
+	@echo Dependency files:
+	@echo "    $(LIB_DEPS)"
+	@echo Object files:
+	@echo "    $(LIB_OBJS)"
+	@echo 
 
 .PHONY: clean distclean mkinfo help

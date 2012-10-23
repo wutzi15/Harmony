@@ -1,6 +1,6 @@
 #include "HWheel.h"
 
-#include <math>
+#include <cmath>
 
 HWheel::HWheel(float seed)
 {
