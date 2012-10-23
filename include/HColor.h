@@ -16,10 +16,10 @@ public:
 	void setRedBlueYellow(uint8_t r, uint8_t b, uint8_t y);
 	uint8_t getRed_rby();
 	uint8_t getBlue_rby();
-	uint8_t getYellow_rgy();
+	uint8_t getYellow_rby();
 
 private:
-	uint8_t r_rgb, g,r_gb, b_rgb;
+	uint8_t r_rgb, g_rgb, b_rgb;
 	uint8_t r_rby, b_rby, y_rby;
 
 };
